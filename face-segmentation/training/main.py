@@ -22,6 +22,7 @@ parser.add_argument(
 parser.add_argument("--epochs", default=25, type=int)
 parser.add_argument("--batchsize", default=4, type=int)
 parser.add_argument("--outputConfig", default=3, type=int)
+parser.add_argument("--gpuId", default=0, type=int)
 
 args = parser.parse_args()
 
@@ -31,6 +32,7 @@ data_dir = args.data_directory
 epochs = args.epochs
 batchsize = args.batchsize
 outputConfig = args.outputConfig
+gpu_id=args.gpuId
 
 # Create the deeplabv3 resnet101 model which is pretrained on a subset of COCO train2017, on the 20 categories that are present in the Pascal VOC dataset.
 model = createDeepLabv3(outputConfig)
@@ -54,7 +56,7 @@ dataloaders = datahandler.get_dataloader_single_folder(
     data_dir, imageFolder='images', maskFolder='masks', fraction=0.2, batch_size=batchsize)
 
 trained_model = train_model(model, criterion, dataloaders,
-                            optimizer, bpath=bpath, metrics=metrics, num_epochs=epochs)
+                            optimizer, bpath=bpath, metrics=metrics, num_epochs=epochs, gpu_id=gpu_id)
 
 
 # Save the trained model
