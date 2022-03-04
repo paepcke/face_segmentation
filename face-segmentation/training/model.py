@@ -1,5 +1,5 @@
 """ DeepLabv3 Model download and change the head for your prediction"""
-from models.segmentation.deeplabv3 import DeepLabHead
+from training.models.segmentation.deeplabv3 import DeepLabHead
 from torchvision import models
 
 

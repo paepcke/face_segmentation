@@ -1,8 +1,9 @@
 import torch.optim as optim
 from sklearn.metrics import roc_auc_score, f1_score
-from model import createDeepLabv3
-from trainer import train_model
-import datahandler
+import training.models
+from training.model import createDeepLabv3
+from training.trainer import train_model
+import training.datahandler
 import argparse
 import os
 import torch
