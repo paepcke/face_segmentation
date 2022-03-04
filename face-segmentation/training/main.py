@@ -60,6 +60,12 @@ trained_model = train_model(model, criterion, dataloaders,
 
 
 # Save the trained model
-# torch.save({'model_state_dict':trained_model.state_dict()},os.path.join(bpath,'weights'))
-torch.save(model, os.path.join(bpath, 'weights.pt'))
+#torch.save({'model_state_dict':trained_model.state_dict()},os.path.join(bpath,'weights'))
+dst_file_pickled    = os.path.join(bpath, 'whole_model.pt')
+dst_file_state_dict = os.path.join(bpath, 'state_dict.pt')
+print(f"Saving pickled model to {dst_file_pickled}")
+torch.save(trained_model, dst_file_pickled)
+print(f"Saving pickled model to {dst_file_state_dict}")
+torch.save(trained_model.state_dict(), dst_file_state_dict)
+print("Done")
 
