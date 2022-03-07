@@ -4,6 +4,9 @@ import cv2
 import pandas as pd
 import time
 import argparse
+from collections import OrderedDict
+
+from training.model import createDeepLabv3
 
 print(torch.__version__)
 
@@ -19,13 +22,30 @@ args = parser.parse_args()
 model_path = args.model_path
 image_path = args.image_path
 
-# Load the trained model
-if torch.cuda.is_available():
-    model = torch.load(model_path)
-else:
-    model = torch.load(model_path, map_location=torch.device('cpu'))
+# Load the trained model, which is either the entire
+# model in pickle format, or just the state dict:
 
-device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+if torch.cuda.is_available():
+    device = torch.device('cuda:0')
+else:
+    device = torch.device('cpu')
+
+model_info = torch.load(model_path)
+if type(model_info) == OrderedDict:
+    model = createDeepLabv3()
+    model.load_state_dict(model_info)
+else: 
+    model = model_info
+
+model.to(device)
+
+
+# if torch.cuda.is_available():
+#     model = torch.load(model_path)
+# else:
+#     model = torch.load(model_path, map_location=torch.device('cpu'))
+#
+# device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 print(device)
 # Set the model to evaluate mode
 model.eval()
