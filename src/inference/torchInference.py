@@ -9,7 +9,6 @@ from pathlib import Path
 
 import matplotlib.pyplot as plt
 from training.model import createDeepLabv3
-from torch.nn.functional import softmax
 
 parser = argparse.ArgumentParser()
 parser.add_argument(
